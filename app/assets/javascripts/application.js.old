@@ -1,0 +1,93 @@
+// This is a manifest file that'll be compiled into application.js, which will include all the files
+// listed below.
+//
+// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, or any plugin's
+// vendor/assets/javascripts directory can be referenced here using a relative path.
+//
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// compiled file. JavaScript code in this file should be added after the last require_* statement.
+//
+// Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
+// about supported directives.
+//
+//= require jquery
+//= require jquery_ujs
+//= require rails-ujs
+//= require turbolinks
+//= require twitter/bootstrap
+//= require_tree .
+
+$(document).on('turbolinks:load', function(){
+    $.get("v2/articles/index", function(data, status){
+        console.log("Data: " + data + "\nStatus: " + status);
+
+        var table = document.createElement('table');
+        table.cellpadding = 0;
+        table.cellspacing = 0;
+        table.border = 1;
+	$("#tab").append(table);
+
+        var row = document.createElement('tr');
+        var column_title = document.createElement('td');
+        var column_text = document.createElement('td');
+        var text = undefined;
+        
+        text = document.createTextNode("Title");
+        row.appendChild(column_title);
+        column_title.appendChild(text);
+
+        text = document.createTextNode("Text");
+        row.appendChild(column_text);
+        column_text.appendChild(text);
+
+        var text = undefined;
+        var linkText = undefined;
+        for (var i = 0; i < data.length; i++){
+            var row = document.createElement('tr');
+            var column1 = document.createElement('td');
+            var column2 = document.createElement('td');
+            var column3 = document.createElement('td');
+            var column4 = document.createElement('td');
+            var column5 = document.createElement('td');
+
+            text = document.createTextNode(data[i].title);
+            row.appendChild(column1);
+            column1.appendChild(text);
+
+            text = document.createTextNode(data[i].text);
+            column2.appendChild(text);
+            row.appendChild(column2);
+
+            text = document.createElement('a');
+            text.setAttribute("href", "http://localhost:3000/articles/" + data[i].id);
+            text.innerHTML = "Show";
+            column3.appendChild(text);
+            row.appendChild(column3);
+
+            text = document.createElement('a');
+            text.setAttribute("href", "http://localhost:3000/articles/" + data[i].id + "/edit");
+            text.innerHTML = "Edit";
+            column4.appendChild(text);
+            row.appendChild(column4);
+
+            text = document.createElement('a');
+            text.id = data[i].id;
+            text.innerHTML = "Delete";
+            column5.appendChild(text);
+            row.appendChild(column5);
+
+            table.appendChild(row);
+            $("#"+text.id).click(function(){
+                                     console.log(this);
+				     $.ajax({type: "POST",
+                                             url: "http://localhost:3000/articles/" + text.id,
+					     method: 'DELETE',
+					     success: function(data) {
+							  this.parent('tr').remove();
+							  location.reload();
+                                                      }
+			             });console.log(this);
+	                        });
+        }
+    }); 
+});

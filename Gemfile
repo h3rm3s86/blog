@@ -10,11 +10,31 @@ gem "therubyracer"
 gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem 'sprockets', '~> 3.6.3'
 gem "twitter-bootstrap-rails"
-#gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+# gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 # gem 'autoprefixer-rails'
 # gem 'bootstrap-sass', '~> 3.2.0'
 # Para generar slim templates
 gem 'slim-rails'
+# Para autenticacion
+gem 'devise'
+gem 'devise-i18n'
+# Login con cuentas de google
+gem 'omniauth-google-oauth2'
+gem 'figaro'
+# Login con cuentas de facebook
+gem 'omniauth-facebook'
+# Pundit
+gem 'pundit'
+# Rails admin
+gem 'rails_admin', '~> 1.2'
+# Sidekiq
+gem 'sidekiq'
+# Paginacion
+gem 'kaminari'
+# Versionist
+gem 'versionist'
+# jquery-rails'
+gem 'jquery-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.2'

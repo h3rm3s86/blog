@@ -8,3 +8,16 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
     = yield
+- flash.each do |name, msg|
+    = content_tag :div, msg, :id => "flash_#{name}"
+
+- if current_user
+    = link_to 'Logout', destroy_user_session_path, method: :delete
+- else
+    = link_to '', new_user_session_path
+
+-if current_user.try(:admin?)
+    = link_to 'Admin view', '/admin'
+
+- if current_user
+    = link_to 'Send mail'

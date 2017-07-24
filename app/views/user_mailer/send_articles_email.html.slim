@@ -1,0 +1,10 @@
+doctype html
+html
+  head
+    meta[content="text/html; charset=UTF-8" http-equiv="Content-Type"]
+    title
+      | Last 10 articles list
+  body
+    = @article.each do |a|
+      = a.title
+      br

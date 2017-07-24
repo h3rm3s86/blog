@@ -3,3 +3,10 @@ h1
 br
 = link_to 'Article List', controller: 'articles'
 = link_to 'New Article', new_article_path
+br
+- if user_signed_in?
+  | Logued in as 
+  strong
+    = current_user.email
+  |.
+  = link_to 'Edit Profile', edit_user_registration_path, :class => 'navbar-link'

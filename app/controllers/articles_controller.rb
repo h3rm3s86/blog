@@ -5,7 +5,9 @@ class ArticlesController < ApplicationController
                                except: %i[index show]
 
   def index
-    @articles = Article.all
+    @articles = Article.order(:created_at).page params[:page]
+    #@articles = Article.all.page(params[:page]).per(10)
+    #render json: @articles
   end
 
   def show
@@ -18,10 +20,12 @@ class ArticlesController < ApplicationController
 
   def edit
     @article = Article.find(params[:id])
+    authorize @article
   end
 
   def create
     @article = Article.new(article_params)
+    @article.user_id = current_user.id
 
     if @article.save
       redirect_to @article
@@ -32,7 +36,6 @@ class ArticlesController < ApplicationController
 
   def update
     @article = Article.find(params[:id])
-
     if @article.update(article_params)
       redirect_to @article
     else
@@ -42,9 +45,15 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article = Article.find(params[:id])
+    authorize @article
     @article.destroy
 
-    redirect_to articles_path
+    redirect_to articles_path, notice: 'Article was successfully destroyed.'
+  end
+
+  def test
+    @articles = Article.all
+    render json: @articles
   end
 
   private
