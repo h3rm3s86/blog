@@ -10,14 +10,14 @@ class UserMailer < ActionMailer::Base
   def send_articles_email(user, article)
     @user = user
     @article = article
-    mail(:to => "vichual86@gmail.com",
+    mail(:to => user.email,
          :subject => "Last 10 articles")
   end
 
   def send_articles_email2(user, article)
     @user = user
     @article = article
-    mail(:to => "vichual86@gmail.com",
+    mail(:to => user.email,
          :subject => "Last 10 articles from last 5 registered users")
   end
 end
